@@ -1,0 +1,28 @@
+img {
+    height: 120px;
+    width: 120px;
+    border-radius: 10%;
+    padding-left: 5%;
+    padding-bottom: 5%;
+}
+
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 20%;
+}
+
+body {
+    margin: 0;
+    background-color: rgb(130, 238, 222);
+}
+
+h1{
+    padding-left: 45%;
+
+}
