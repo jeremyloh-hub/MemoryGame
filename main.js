@@ -6,24 +6,24 @@ const game = {
         abilities:  {remove1Pair: false, revealAll: false, addLp: false, addTime: false}
     },
     timer:          120,
-    cardShown: [{Name: '1' , src: 'Assets/1.jpeg'},
-                {Name: '1' , src: 'Assets/1.jpeg'},
-                {Name: '2' , src: 'Assets/2.jpeg'},
-                {Name: '2' , src: 'Assets/2.jpeg'},
-                {Name: '3' , src: 'Assets/3.webp'},
-                {Name: '3' , src: 'Assets/3.webp'},
-                {Name: '4' , src: 'Assets/4.webp'},
-                {Name: '4' , src: 'Assets/4.webp'},
-                {Name: '5' , src: 'Assets/5.jpeg'},
-                {Name: '5' , src: 'Assets/5.jpeg'},
-                {Name: '6' , src: 'Assets/6.webp'},
-                {Name: '6' , src: 'Assets/6.webp'},
+    cardShown: [{Name: 'blackpom' , src: 'Assets/1.jpeg'},
+                {Name: 'blackpom' , src: 'Assets/1.jpeg'},
+                {Name: 'corgi' , src: 'Assets/2.jpeg'},
+                {Name: 'corgi' , src: 'Assets/2.jpeg'},
+                {Name: 'golden' , src: 'Assets/3.webp'},
+                {Name: 'golden' , src: 'Assets/3.webp'},
+                {Name: 'husky' , src: 'Assets/4.webp'},
+                {Name: 'husky' , src: 'Assets/4.webp'},
+                {Name: 'pom' , src: 'Assets/5.jpeg'},
+                {Name: 'pom' , src: 'Assets/5.jpeg'},
+                {Name: 'shiba' , src: 'Assets/6.webp'},
+                {Name: 'shiba' , src: 'Assets/6.webp'},
 
             ] 
 
 }
 
-const cardCombination = [[0,1],[2,3],[4,5],[6,7],[8,9],[10,11]] // id or src
+const cardCompare = [];
 
 
 function renderCards(card){
@@ -34,9 +34,10 @@ function renderCards(card){
         const cardArray = card[i];
         const createCards = document.createElement('img');
 
+        createCards.setAttribute('id',i);
         createCards.setAttribute('value',cardArray.Name);
-        createCards.setAttribute('src',cardArray.src);
-        //createCards.addEventListener('click',flipCard);
+        createCards.setAttribute('src','/Assets/cardcover.webp');
+        createCards.addEventListener('click',flipCard);
 
         selectCardDiv.appendChild(createCards);
     }
@@ -78,7 +79,48 @@ function randomCards()// set each card value to -1 , 0 , 1 and then compare them
 }
 
 function flipCard(){
+    if(cardCompare.length === 2){
+        console.log('you found a match!')
+    }
+    else
+    {
+        const value = this.getAttribute('id');
+        const name = this.getAttribute('value');
+        this.setAttribute('src',game.cardShown[value].src);
+        //console.log(value);
+        //console.log(name);
+        cardCompare.push(name);
+        console.log(cardCompare);
+    }
     
+        if(cardCompare.length === 2)
+        {
+            if(cardCompare[0] === cardCompare[1])
+            {
+                console.log('you found a match!')
+                
+            }
+            else
+            {
+                console.log('too bad !');
+            }
+        }
+}
+
+function checkCompareArray()
+{
+    if(cardCompare.length >= 2)
+    {
+        if(cardCompare[0] === cardCompare[1])
+        {
+            console.log('you found a match!')
+            
+        }
+        else
+        {
+            console.log('too bad !');
+        }
+    }
 }
 
 
