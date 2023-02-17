@@ -1,10 +1,12 @@
 # MemoryGame
 
-##Description
+## Description
+
 The memory game is a card game played with a sets of card being facedown and each picture will appear on two cards. The game starts with all the cards facedown and the player have to turn over two cards. If the two cards matches , then they get to keep the cards as points , otherwise they have to turn the cards face down again. The winner is the person with the most points / cards.
 
-##Wireframe/Storyboard
-![alt text](https://github.com/jeremyloh-hub/MemoryGame/tree/main/Assets/wireframe.png)
+## Wireframe/Storyboard
+
+![alt text](https://github.com/jeremyloh-hub/MemoryGame/tree/main/Assets/wireframe.png "Wireframe/Storyboard")
 
 REFERENCES:
 Picture: 'POM' LINK: https://www.pexels.com/photo/brown-pomeranian-puppy-on-grey-concrete-floor-3687770/
