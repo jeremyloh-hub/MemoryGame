@@ -6,33 +6,24 @@ const game = {
         abilities:  {remove1Pair: false, revealAll: false, addLp: false, addTime: false}
     },
     timer:          120,
-    cardShown: ['Assets/1.jpeg',
-                'Assets/1.jpeg',
-                'Assets/2.jpeg',
-                'Assets/2.jpeg',
-                'Assets/3.webp',
-                'Assets/3.webp',
-                'Assets/4.webp',
-                'Assets/4.webp',
-                'Assets/5.jpeg',
-                'Assets/5.jpeg',
-                'Assets/6.webp',
-                'Assets/6.webp'],
+    cardShown: [{Name: '1' , src: 'Assets/1.jpeg'},
+                {Name: '1' , src: 'Assets/1.jpeg'},
+                {Name: '2' , src: 'Assets/2.jpeg'},
+                {Name: '2' , src: 'Assets/2.jpeg'},
+                {Name: '3' , src: 'Assets/3.webp'},
+                {Name: '3' , src: 'Assets/3.webp'},
+                {Name: '4' , src: 'Assets/4.webp'},
+                {Name: '4' , src: 'Assets/4.webp'},
+                {Name: '5' , src: 'Assets/5.jpeg'},
+                {Name: '5' , src: 'Assets/5.jpeg'},
+                {Name: '6' , src: 'Assets/6.webp'},
+                {Name: '6' , src: 'Assets/6.webp'},
 
-    cards:     ['Assets/cardcover.webp',
-                'Assets/cardcover.webp',
-                'Assets/cardcover.webp',
-                'Assets/cardcover.webp',
-                'Assets/cardcover.webp',
-                'Assets/cardcover.webp',
-                'Assets/cardcover.webp',
-                'Assets/cardcover.webp',
-                'Assets/cardcover.webp',
-                'Assets/cardcover.webp',
-                'Assets/cardcover.webp',
-                'Assets/cardcover.webp']
+            ] 
 
 }
+
+const cardCombination = [[0,1],[2,3],[4,5],[6,7],[8,9],[10,11]] // id or src
 
 
 function renderCards(card){
@@ -43,10 +34,13 @@ function renderCards(card){
         const cardArray = card[i];
         const createCards = document.createElement('img');
 
-        createCards.setAttribute('id',i);
-        createCards.setAttribute('src',cardArray);
+        createCards.setAttribute('value',cardArray.Name);
+        createCards.setAttribute('src',cardArray.src);
+        //createCards.addEventListener('click',flipCard);
+
         selectCardDiv.appendChild(createCards);
     }
+
 }
 
 function renderDisplay(){
@@ -74,7 +68,21 @@ function renderDisplay(){
 
 }
 
+// https://stackoverflow.com/questions/12885110/javascript-math-random
+function randomCards()// set each card value to -1 , 0 , 1 and then compare them 
+{
+    game.cardShown.sort(function(){
+        return Math.round(Math.random() * 2) -1
+    })
+    renderCards(game.cardShown);
+}
+
+function flipCard(){
+    
+}
+
+
 
 
 renderDisplay();
-renderCards(game.cards);
+randomCards();
