@@ -6,9 +6,10 @@ The memory game is a card game played with a sets of card being facedown and eac
 
 ## Wireframe/Storyboard
 
-![alt text](https://github.com/jeremyloh-hub/MemoryGame/tree/main/Assets/wireframe.png "Wireframe/Storyboard")
+![Wireframe](https://github.com/jeremyloh-hub/MemoryGame/blob/main/Notes/wireframe.png?raw=true)
 
-REFERENCES:
+## References
+
 Picture: 'POM' LINK: https://www.pexels.com/photo/brown-pomeranian-puppy-on-grey-concrete-floor-3687770/
 
 Picture: 'Blackpom' Link: https://www.pexels.com/photo/black-pomeranian-puppy-4664344/
