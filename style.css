@@ -1,25 +1,23 @@
 img {
-    height: 120px;
-    width: 120px;
+    height: 130px;
+    width: 130px;
     border-radius: 10%;
-    padding-left: 5%;
+    padding-left: 10%;
     padding-bottom: 5%;
 }
 
 .cards{
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
     justify-content: center;
-    align-items: center;
-    align-content: space-between;
     padding-left: 20%;
     padding-right: 20%;
-    padding-top: 20%;
+    padding-top: 10%;
 }
 
 body {
     margin: 0;
-    background-color: rgb(130, 238, 222);
+    background-color: rgb(42, 208, 164);
 }
 
 h1{
