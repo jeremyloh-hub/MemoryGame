@@ -23,7 +23,7 @@ const game = {
 
 }
 
-const cardCompare = [];
+let cardCompare = [];
 
 
 function renderCards(card){
@@ -79,49 +79,47 @@ function randomCards()// set each card value to -1 , 0 , 1 and then compare them
 }
 
 function flipCard(){
-    if(cardCompare.length === 2){
-        console.log('you found a match!')
+    if(cardCompare.length >= 2){
+        if(cardCompare[0] === cardCompare[1])
+            {
+                console.log('you found a match!')
+            }
     }
     else
     {
         const value = this.getAttribute('id');
         const name = this.getAttribute('value');
+        const cardValue = {name:name,id:value}
         this.setAttribute('src',game.cardShown[value].src);
-        //console.log(value);
-        //console.log(name);
-        cardCompare.push(name);
-        console.log(cardCompare);
+
+        cardCompare.push(cardValue);
     }
     
-        if(cardCompare.length === 2)
+        if(cardCompare.length >= 2)
         {
-            if(cardCompare[0] === cardCompare[1])
+            if(cardCompare[0].name === cardCompare[1].name)
             {
                 console.log('you found a match!')
-                
             }
             else
-            {
-                console.log('too bad !');
+            {   
+                const id1 = cardCompare[0].id
+                const id2 = cardCompare[1].id;
+                console.log(game.cardShown[id1]);
+                
+                game.cardShown[id1].src = 'Assets/cardcover.webp';
+                game.cardShown[id2].src = 'Assets/cardcover.webp';
+                console.log(game.cardShown[id1].src);
+                console.log(game.cardShown[id2].src);
+                cardCompare = [];
+                
+                //renderCards(game.cardShown);
             }
+            
         }
 }
 
-function checkCompareArray()
-{
-    if(cardCompare.length >= 2)
-    {
-        if(cardCompare[0] === cardCompare[1])
-        {
-            console.log('you found a match!')
-            
-        }
-        else
-        {
-            console.log('too bad !');
-        }
-    }
-}
+
 
 
 
