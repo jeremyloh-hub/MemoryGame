@@ -36,7 +36,7 @@ function renderCards(card){
 
         createCards.setAttribute('id',i);
         createCards.setAttribute('value',cardArray.Name);
-        createCards.setAttribute('src','/Assets/cardcover.webp');
+        createCards.setAttribute('src','Assets/cardcover.webp');
         createCards.addEventListener('click',flipCard);
 
         selectCardDiv.appendChild(createCards);
