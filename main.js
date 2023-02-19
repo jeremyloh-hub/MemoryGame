@@ -100,20 +100,24 @@ function flipCard(){
             if(cardCompare[0].name === cardCompare[1].name)
             {
                 console.log('you found a match!')
+                //disappear
             }
             else
             {   
-                const id1 = cardCompare[0].id
-                const id2 = cardCompare[1].id;
-                console.log(game.cardShown[id1]);
-                
-                game.cardShown[id1].src = 'Assets/cardcover.webp';
-                game.cardShown[id2].src = 'Assets/cardcover.webp';
-                console.log(game.cardShown[id1].src);
-                console.log(game.cardShown[id2].src);
-                cardCompare = [];
-                
-                //renderCards(game.cardShown);
+                // const id1 = cardCompare[0].id
+                // const id2 = cardCompare[1].id;
+                // console.log(game.cardShown[id1]);
+                // //game.cardShown[id1].src = 'Assets/cardcover.webp';
+                // ///game.cardShown[id2].src = 'Assets/cardcover.webp';
+                // console.log(game.cardShown[id1].src);
+                // console.log(game.cardShown[id2].src);
+                // cardCompare = [];
+                // renderCards(game.cardShown);
+
+                setTimeout(function(){
+                    cardCompare = [];
+                    renderCards(game.cardShown);
+                },2000)
             }
             
         }
