@@ -26,19 +26,18 @@ const game = {
 let cardCompare = [];
 
 
-function renderCards(card){
+function renderCards(){
     const selectCardDiv = document.querySelector('.cards')
     selectCardDiv.textContent = '';
 
-    for (let i = 0; i < card.length; i++) {
-        const cardArray = card[i];
+    for (let i = 0; i < game.cardShown.length; i++) {
+        const cardArray = game.cardShown[i];
         const createCards = document.createElement('img');
 
         createCards.setAttribute('id',i);
         createCards.setAttribute('value',cardArray.Name);
         createCards.setAttribute('src','Assets/cardcover.webp');
         createCards.addEventListener('click',flipCard);
-        createCards.disabled = false;
         selectCardDiv.appendChild(createCards);
     }
 
@@ -70,10 +69,10 @@ function renderDisplay(){
 }
 
 // https://stackoverflow.com/questions/12885110/javascript-math-random
-function randomCards()// set each card value to -1 , 0 , 1 and then compare them 
+function randomCards()// set each card value to -1, 0 , 1 and then compare them 
 {
     game.cardShown.sort(function(){
-        return Math.round(Math.random() * 2) -1
+        return Math.round(Math.random() * 2) -1 
     })
     renderCards(game.cardShown);
 }
@@ -106,18 +105,23 @@ function flipCard(){
                 //disappear MVC = delete element or delete object and render
                 id1 = String(cardCompare[0].id);
                 id2 = String(cardCompare[1].id);
-  
-                //console.log(game.cardShown);
+                cardName = cardCompare[0].name;
+                
 
                 setTimeout(function(){
+                    
+                    // const selectDiv1 = document.getElementById(id1);
+                    // const selectDiv2 = document.getElementById(id2);
+                    // selectDiv1.style.display = 'none';
+                    // selectDiv2.style.display = 'none';
+                    // game.cardShown[id1].src = '';
+                    // game.cardShown[id2].src = '';
+                    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+                    game.cardShown = game.cardShown.filter(function(card){
+                        return card.Name !== cardName;
+                    })
+                    renderCards(game.cardShown);
                     cardCompare = [];
-                    const selectDiv1 = document.getElementById(id1);
-                    const selectDiv2 = document.getElementById(id2);
-                    selectDiv1.style.display = 'none';
-                    selectDiv2.style.display = 'none';
-                    game.cardShown[id1].src = '';
-                    game.cardShown[id2].src = '';
-
                 },1000)
                 
             }
@@ -127,18 +131,17 @@ function flipCard(){
                 id1 = String(cardCompare[0].id);
                 id2 = String(cardCompare[1].id);
                 setTimeout(function(){
+                    // let selectDiv1 = document.getElementById(id1);
+                    // let selectDiv2 = document.getElementById(id2);
+                    // selectDiv1.setAttribute('src','Assets/cardcover.webp');
+                    // selectDiv2.setAttribute('src','Assets/cardcover.webp');
+                    // selectDiv1.addEventListener('click',flipCard);
+                    // selectDiv2.addEventListener('click',flipCard);
                     
-                    let selectDiv1 = document.getElementById(id1);
-                    let selectDiv2 = document.getElementById(id2);
-                    
-                    selectDiv1.setAttribute('src','Assets/cardcover.webp');
-                    selectDiv2.setAttribute('src','Assets/cardcover.webp');
-                    selectDiv1.addEventListener('click',flipCard);
-                    selectDiv2.addEventListener('click',flipCard);
-
-                    console.log(selectDiv1);
+                    renderCards(game.cardShown);
+                    cardCompare = [];
                 },1000)
-                cardCompare = [];
+                
                 
             }
             
