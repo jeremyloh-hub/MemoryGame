@@ -1,7 +1,7 @@
 const game = { 
     player: {
         lifepoints: 10,
-        points:     2,
+        points:     0,
         highscore:  0,
         abilities:  {remove1Pair: false, revealAll: false, addLp: false, addTime: false}
     },
@@ -38,7 +38,7 @@ function renderCards(card){
         createCards.setAttribute('value',cardArray.Name);
         createCards.setAttribute('src','Assets/cardcover.webp');
         createCards.addEventListener('click',flipCard);
-
+        createCards.disabled = false;
         selectCardDiv.appendChild(createCards);
     }
 
@@ -87,41 +87,66 @@ function flipCard(){
     }
     else
     {
+        
         const value = this.getAttribute('id');
         const name = this.getAttribute('value');
         const cardValue = {name:name,id:value}
         this.setAttribute('src',game.cardShown[value].src);
-
+        this.removeEventListener('click',flipCard);
         cardCompare.push(cardValue);
+        
     }
     
         if(cardCompare.length >= 2)
         {
             if(cardCompare[0].name === cardCompare[1].name)
             {
+
                 console.log('you found a match!')
-                //disappear
-            }
-            else
-            {   
-                // const id1 = cardCompare[0].id
-                // const id2 = cardCompare[1].id;
-                // console.log(game.cardShown[id1]);
-                // //game.cardShown[id1].src = 'Assets/cardcover.webp';
-                // ///game.cardShown[id2].src = 'Assets/cardcover.webp';
-                // console.log(game.cardShown[id1].src);
-                // console.log(game.cardShown[id2].src);
-                // cardCompare = [];
-                // renderCards(game.cardShown);
+                //disappear MVC = delete element or delete object and render
+                id1 = String(cardCompare[0].id);
+                id2 = String(cardCompare[1].id);
+  
+                //console.log(game.cardShown);
 
                 setTimeout(function(){
                     cardCompare = [];
-                    renderCards(game.cardShown);
-                },2000)
+                    const selectDiv1 = document.getElementById(id1);
+                    const selectDiv2 = document.getElementById(id2);
+                    selectDiv1.style.display = 'none';
+                    selectDiv2.style.display = 'none';
+                    game.cardShown[id1].src = '';
+                    game.cardShown[id2].src = '';
+
+                },1000)
+                
+            }
+            else
+            {  
+                
+                id1 = String(cardCompare[0].id);
+                id2 = String(cardCompare[1].id);
+                setTimeout(function(){
+                    
+                    let selectDiv1 = document.getElementById(id1);
+                    let selectDiv2 = document.getElementById(id2);
+                    
+                    selectDiv1.setAttribute('src','Assets/cardcover.webp');
+                    selectDiv2.setAttribute('src','Assets/cardcover.webp');
+                    selectDiv1.addEventListener('click',flipCard);
+                    selectDiv2.addEventListener('click',flipCard);
+
+                    console.log(selectDiv1);
+                },1000)
+                cardCompare = [];
+                
             }
             
         }
+    
 }
+    
+
 
 
 
