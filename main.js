@@ -1,11 +1,11 @@
 const game = { 
     player: {
-        lifepoints: 10,
+        lifepoints: '10',
         points:     0,
-        highscore:  0,
+        highscore:  '0',
         abilities:  {remove1Pair: false, revealAll: false, addLp: false, addTime: false}
     },
-    timer:          120,
+    timer:          '60',
     cardShown: [{Name: 'blackpom' , src: 'Assets/1.jpeg'},
                 {Name: 'blackpom' , src: 'Assets/1.jpeg'},
                 {Name: 'corgi' , src: 'Assets/2.jpeg'},
@@ -106,7 +106,9 @@ function flipCard(){
                 id1 = String(cardCompare[0].id);
                 id2 = String(cardCompare[1].id);
                 cardName = cardCompare[0].name;
-                
+
+                game.player.points += 1;
+                renderDisplay();
 
                 setTimeout(function(){
                     
@@ -149,12 +151,30 @@ function flipCard(){
     
 }
     
+function countdown(seconds) {
+   
+    let interval =  setInterval(function() {
+         console.log('COUNT: ' + seconds);
+         game.timer = seconds;
+         renderDisplay();
+         seconds--;
+        
+         
+         if(seconds < 0)
+         {
+             clearInterval(interval);
+         }
+     }, 1000);
+     
+   }
+ 
+  function main(){
+    countdown(game.timer);
+    renderDisplay();
+    randomCards();
+    
+  }
 
 
+main();
 
-
-
-
-
-renderDisplay();
-randomCards();
