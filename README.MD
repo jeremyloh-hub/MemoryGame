@@ -22,4 +22,6 @@ Picture: 'husky' Link: https://www.pexels.com/photo/black-and-white-siberian-hus
 
 Picture: 'corgi' Link: https://www.pexels.com/photo/high-angle-photo-of-a-corgi-looking-upwards-2664417/
 
-Picture: ‘cardcover’ Link: https://www.pexels.com/photo/abstract-painting-3435272/
+Picture: ‘cardcover’ Link: https://pixabay.com/illustrations/silhouette-imprint-paw-foot-track-1314467/
+
+Picture: 'background' Link: https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=400

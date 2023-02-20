@@ -3,7 +3,10 @@ const game = {
         lifepoints: 10,
         points:     0,
         highscore:  0,
-        abilities:  {remove1Pair: false, revealAll: false, addLp: false, addTime: false}
+        abilities:  [   {Name: 'RemoveOnePair', Enabled: false}, 
+                        {Name: 'RevealAll', Enabled: false}, 
+                        {Name: 'AddLifePoints', Enabled: false}, 
+                        {Name: 'AddTime', Enabled: false}]
     },
     timer:          '60',
     cardShown: [{Name: 'blackpom' , src: 'Assets/1.jpeg'},
@@ -23,8 +26,9 @@ const game = {
 
 }
 
-let cardCompare = [];
 
+
+let cardCompare = [];
 
 function renderCards(){
     const selectCardDiv = document.querySelector('.cards')
@@ -36,11 +40,10 @@ function renderCards(){
 
         createCards.setAttribute('id',i);
         createCards.setAttribute('value',cardArray.Name);
-        createCards.setAttribute('src','Assets/cardcover.webp');
+        createCards.setAttribute('src','Assets/cardcover.png');
         createCards.addEventListener('click',flipCard);
         selectCardDiv.appendChild(createCards);
     }
-
 }
 
 function renderDisplay(){
@@ -77,6 +80,43 @@ function randomCards()// set each card value to -1, 0 , 1 and then compare them
     renderCards(game.cardShown);
 }
 
+
+
+function RenderAbilityButton(){// create 4 button based on abilities
+const selectBtnDiv = document.querySelector('.AllAbilityBtn');
+selectBtnDiv.textContent = '';
+
+for (let i = 0; i < game.player.abilities.length; i++) {
+    const ability = game.player.abilities[i];
+    
+    const createAbilityButton = document.createElement('button');
+    createAbilityButton.innerText = ability.Name;
+    createAbilityButton.setAttribute('value',ability.Enabled);
+    createAbilityButton.setAttribute('id',i);
+    createAbilityButton.className = 'AbilityBtn';
+    createAbilityButton.addEventListener('click',moveToGame);
+
+    selectBtnDiv.appendChild(createAbilityButton);
+}
+}
+// https://stackoverflow.com/questions/21070101/show-hide-div-using-javascript
+function moveToGame(){
+   const gameScreen = document.querySelector('.gameScreen')
+   const startScreen = document.querySelector('.startScreen');
+   let ability = this.innerText;
+   for (let i = 0; i < game.player.abilities.length; i++) {
+    let element = game.player.abilities[i];
+    if(element.Name === ability)
+    {
+        element.Enabled = true;
+        startScreen.style.display = 'none';
+        gameScreen.style.display = 'block';
+    }
+    
+   }
+    
+}
+
 function flipCard(){
     
     if(cardCompare.length >= 2){
@@ -87,9 +127,9 @@ function flipCard(){
     }
     else
     {
-        
         const value = this.getAttribute('id');
         const name = this.getAttribute('value');
+
         const cardValue = {name:name,id:value}
         this.setAttribute('src',game.cardShown[value].src);
         this.removeEventListener('click',flipCard);
@@ -147,22 +187,17 @@ function flipCard(){
                     renderDisplay();
                 },1000)
                 
-                
             }
-            
         }
-    
 }
     
 function countdown(seconds) {
    
     let interval =  setInterval(function() {
-         //console.log('COUNT: ' + seconds);
          game.timer = seconds;
          renderDisplay();
          seconds--;
         
-         
          if(seconds < 0)
          {
              clearInterval(interval);
@@ -170,14 +205,16 @@ function countdown(seconds) {
      }, 1000);
      
    }
- 
+
+
   function main(){
+    RenderAbilityButton();
     countdown(game.timer);
     renderDisplay();
     randomCards();
 
   }
-
+  
 
 main();
 

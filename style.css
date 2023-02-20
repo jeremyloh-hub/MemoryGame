@@ -1,7 +1,14 @@
+
+* {
+    /* height & width now includes border & padding */
+    box-sizing: border-box;
+  }
+
+
 img {
     height: 130px;
     width: 130px;
-    border-radius: 10%;
+    border-radius: 90%;
     padding-left: 10%;
     padding-bottom: 5%;
 }
@@ -11,18 +18,53 @@ img {
     grid-template-columns: repeat(3, auto);
     justify-content: center;
     padding-left: 20%;
-    padding-right: 20%;
+    padding-right: 23%;
     padding-top: 10%;
 }
 
 body {
     margin: 0;
-    background-color: rgb(42, 208, 164);
+    background-image: url('Assets/background1.jpeg');
+    
 }
 
-h1{
-    padding-left: 45%;
-
+.gameScreen{
+    display: none;
 }
+
+.startScreen {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1;
+    grid-row: 3;
+    display: block;
+    overflow: auto;
+    
+}
+
+.AllAbilityBtn{
+    padding: 12px 28px;
+    text-align: center;
+}
+
+.AbilityBtn{
+    padding: 15px 28px;
+    border-radius: 80%;
+    font-size:  20px;
+    text-align: center;
+}
+
+.AbilityBtn:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+  }
+
+h1, h2, h3{
+    text-align: center;
+}
+
+
+
 
 /* Reference to https://www.w3schools.com/csS/css3_flexbox_container.asp */
