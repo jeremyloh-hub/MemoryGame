@@ -1,8 +1,8 @@
 const game = { 
     player: {
-        lifepoints: '10',
+        lifepoints: 10,
         points:     0,
-        highscore:  '0',
+        highscore:  0,
         abilities:  {remove1Pair: false, revealAll: false, addLp: false, addTime: false}
     },
     timer:          '60',
@@ -78,6 +78,7 @@ function randomCards()// set each card value to -1, 0 , 1 and then compare them
 }
 
 function flipCard(){
+    
     if(cardCompare.length >= 2){
         if(cardCompare[0] === cardCompare[1])
             {
@@ -140,8 +141,10 @@ function flipCard(){
                     // selectDiv1.addEventListener('click',flipCard);
                     // selectDiv2.addEventListener('click',flipCard);
                     
-                    renderCards(game.cardShown);
+                    renderCards();
                     cardCompare = [];
+                    game.player.lifepoints -= 1;
+                    renderDisplay();
                 },1000)
                 
                 
@@ -154,7 +157,7 @@ function flipCard(){
 function countdown(seconds) {
    
     let interval =  setInterval(function() {
-         console.log('COUNT: ' + seconds);
+         //console.log('COUNT: ' + seconds);
          game.timer = seconds;
          renderDisplay();
          seconds--;
@@ -172,7 +175,7 @@ function countdown(seconds) {
     countdown(game.timer);
     renderDisplay();
     randomCards();
-    
+
   }
 
 
