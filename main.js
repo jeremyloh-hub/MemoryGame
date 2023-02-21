@@ -9,26 +9,26 @@ const game = {
                         {Name: 'AddTime', Enabled: false}]
     },
     timer:          '60',
-    cardShown: [{Name: 'blackpom' , src: 'Assets/1.jpeg'},
-                {Name: 'blackpom' , src: 'Assets/1.jpeg'},
-                {Name: 'corgi' , src: 'Assets/2.jpeg'},
-                {Name: 'corgi' , src: 'Assets/2.jpeg'},
-                {Name: 'golden' , src: 'Assets/3.webp'},
-                {Name: 'golden' , src: 'Assets/3.webp'},
-                {Name: 'husky' , src: 'Assets/4.webp'},
-                {Name: 'husky' , src: 'Assets/4.webp'},
-                {Name: 'pom' , src: 'Assets/5.jpeg'},
-                {Name: 'pom' , src: 'Assets/5.jpeg'},
-                {Name: 'shiba' , src: 'Assets/6.webp'},
-                {Name: 'shiba' , src: 'Assets/6.webp'},
-
+    cardShown: [{Name: 'blackpom' , src: 'Assets/1.jpeg' , Enabled: 'false'},
+                {Name: 'blackpom' , src: 'Assets/1.jpeg' , Enabled: 'false'},
+                {Name: 'corgi' , src: 'Assets/2.jpeg' , Enabled: 'false'},
+                {Name: 'corgi' , src: 'Assets/2.jpeg' , Enabled: 'false'},
+                {Name: 'golden' , src: 'Assets/3.webp', Enabled: 'false'},
+                {Name: 'golden' , src: 'Assets/3.webp' , Enabled: 'false'},
+                {Name: 'husky' , src: 'Assets/4.webp' , Enabled: 'false'},
+                {Name: 'husky' , src: 'Assets/4.webp' , Enabled: 'false'},
+                {Name: 'pom' , src: 'Assets/5.jpeg' , Enabled: 'false'},
+                {Name: 'pom' , src: 'Assets/5.jpeg' , Enabled: 'false'},
+                {Name: 'shiba' , src: 'Assets/6.webp' , Enabled: 'false'},
+                {Name: 'shiba' , src: 'Assets/6.webp' , Enabled: 'false'},
             ] 
-
 }
 
 
-
+// Array for Comparison
 let cardCompare = [];
+///////////////////////
+
 
 function renderCards(){
     const selectCardDiv = document.querySelector('.cards');
@@ -40,10 +40,12 @@ function renderCards(){
 
         createCards.setAttribute('id',i);
         createCards.setAttribute('value',cardArray.Name);
+        createCards.setAttribute('data', cardArray.Enabled);
         createCards.setAttribute('src','Assets/cardcover.png');
         createCards.addEventListener('click',flipCard);
-
         selectCardDiv.appendChild(createCards);
+        
+    // 
     }
 }
 
@@ -83,7 +85,7 @@ function randomCards()// set each card value to -1, 0 , 1 and then compare them
 
 
 
-function RenderAbilityButton(){// create 4 button based on abilities
+function renderAbilityButton(){// create 4 button based on abilities
 const selectBtnDiv = document.querySelector('.AllAbilityBtn');
 selectBtnDiv.textContent = '';
 
@@ -104,7 +106,7 @@ for (let i = 0; i < game.player.abilities.length; i++) {
 function moveToGame(){
    const gameScreen = document.querySelector('.gameScreen')
    const startScreen = document.querySelector('.startScreen');
-   let ability = this.innerText;
+   const ability = this.innerText;
    for (let i = 0; i < game.player.abilities.length; i++) {
     let element = game.player.abilities[i];
     if(element.Name === ability)
@@ -118,79 +120,53 @@ function moveToGame(){
     
 }
 
-function flipCard(){
+function flipCard() {
+    const value = this.getAttribute('id');
+    const name = this.getAttribute('value');
+    const cardValue = { name: name, id: value };
     
-    if(cardCompare.length >= 2){
-        if(cardCompare[0] === cardCompare[1])
-            {
-                console.log('you found a match!')
-            }
-    }
-    else
-    {
-        const value = this.getAttribute('id');
-        const name = this.getAttribute('value');
-
-        const cardValue = {name:name,id:value}
-        this.setAttribute('src',game.cardShown[value].src);
-        this.removeEventListener('click',flipCard);
+    switch(cardCompare.length) {
+      case 0:
+        // First card clicked
         cardCompare.push(cardValue);
-        
-    }
-    
-        if(cardCompare.length >= 2)
-        {
-            if(cardCompare[0].name === cardCompare[1].name)
-            {
-
-                console.log('you found a match!')
-                //disappear MVC = delete element or delete object and render
-                id1 = String(cardCompare[0].id);
-                id2 = String(cardCompare[1].id);
-                cardName = cardCompare[0].name;
-
-                game.player.points += 1;
-                renderDisplay();
-
-                setTimeout(function(){
-                    
-                    // const selectDiv1 = document.getElementById(id1);
-                    // const selectDiv2 = document.getElementById(id2);
-                    // selectDiv1.style.display = 'none';
-                    // selectDiv2.style.display = 'none';
-                    // game.cardShown[id1].src = '';
-                    // game.cardShown[id2].src = '';
-                    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-                    game.cardShown = game.cardShown.filter(function(card){
-                        return card.Name !== cardName;
-                    })
-                    renderCards(game.cardShown);
-                    cardCompare = [];
-                },1000)
-                
-            }
-            else
-            {  
-                
-                id1 = String(cardCompare[0].id);
-                id2 = String(cardCompare[1].id);
-                setTimeout(function(){
-                    // let selectDiv1 = document.getElementById(id1);
-                    // let selectDiv2 = document.getElementById(id2);
-                    // selectDiv1.setAttribute('src','Assets/cardcover.webp');
-                    // selectDiv2.setAttribute('src','Assets/cardcover.webp');
-                    // selectDiv1.addEventListener('click',flipCard);
-                    // selectDiv2.addEventListener('click',flipCard);
-                    
-                    renderCards();
-                    cardCompare = [];
-                    game.player.lifepoints -= 1;
-                    renderDisplay();
-                },1000)
-                
-            }
+        this.setAttribute('src', game.cardShown[value].src);
+        this.removeEventListener('click', flipCard);
+        break;
+      case 1:
+        // Second card clicked
+        cardCompare.push(cardValue);
+        this.setAttribute('src', game.cardShown[value].src);
+        this.removeEventListener('click', flipCard);
+  
+        if(cardCompare[0].name === cardCompare[1].name) {
+          // Match found
+          setTimeout(function() {
+            console.log('you found a match!');
+            const id1 = cardCompare[0].id;
+            const id2 = cardCompare[1].id;
+            game.cardShown[id1].Enabled = false;
+            game.cardShown[id2].Enabled = false;
+            renderCards();
+            renderDisableOrEnableCard();
+            cardCompare = [];
+          }, 1000);
+        } else {
+          // No match found
+          setTimeout(function() {
+            renderCards();
+            renderDisableOrEnableCard();
+            cardCompare = [];
+            game.player.lifepoints -= 1;
+            renderDisplay();
+          }, 1000);
         }
-}
+        break;
+      default:
+        // More than two cards clicked, do nothing
+        break;
+    }
+  }
+
     
 function countdown(seconds) {
    
@@ -212,25 +188,46 @@ function countdown(seconds) {
   
     let startBtn = document.querySelector('#startBtn');
     startBtn.classList.add('disabledbutton');
-
-    const cards = document.querySelectorAll('img');
-    for (let i = 0; i < cards.length; i++) {
-        let card = cards[i];
-        card.classList.remove('disabledbutton');
-    }
+    enableAllCards();
+    renderCards();
+    renderDisableOrEnableCard();
+  
    }
 
    function disableAllCards()
    {
-    const cards = document.querySelectorAll('img');
-    for (let i = 0; i < cards.length; i++) {
-        let card = cards[i];
-        card.classList.add('disabledbutton');
-        console.log(card);
+    for (let i = 0; i < game.cardShown.length; i++) {
+        let card = game.cardShown[i];
+        card.Enabled = 'false';
     }
-    
    }
 
+   function enableAllCards(){
+    for (let i = 0; i < game.cardShown.length; i++) {
+        let card = game.cardShown[i];
+        card.Enabled = true;
+    }
+   }
+
+   function renderDisableOrEnableCard()
+   {
+    const selectImg = document.querySelectorAll('img');
+            for (let i = 0; i < selectImg.length; i++) {
+                const element = selectImg[i];
+                if(element.getAttribute('data') === 'false')
+                {
+                    element.classList.add('disabledbutton');
+                    
+                }
+                else if(element.getAttribute('data') === 'true')
+                {
+                    element.classList.remove('disabledbutton');
+                    
+                }
+            }
+            
+   }
+   
 
   function main(){
     
@@ -238,10 +235,11 @@ function countdown(seconds) {
     selectStartBtn.addEventListener('click',startGame);
 
    
-    RenderAbilityButton();
+    renderAbilityButton();
     renderDisplay();
     randomCards();
     disableAllCards();
+    renderDisableOrEnableCard();
 
   }
   
