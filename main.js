@@ -121,51 +121,56 @@ function moveToGame(){
 }
 
 function flipCard() {
-    const value = this.getAttribute('id');
-    const name = this.getAttribute('value');
-    const cardValue = { name: name, id: value };
-    
-    switch(cardCompare.length) {
-      case 0:
-        // First card clicked
+    if(cardCompare.length === 0){
+        const value = this.getAttribute('id');
+        const name = this.getAttribute('value');
+
+        const cardValue = {name:name,id:value}
+        this.setAttribute('src',game.cardShown[value].src);
+        this.removeEventListener('click',flipCard);
+
         cardCompare.push(cardValue);
-        this.setAttribute('src', game.cardShown[value].src);
-        this.removeEventListener('click', flipCard);
-        break;
-      case 1:
-        // Second card clicked
+    }
+    else if(cardCompare.length === 1){
+        const value = this.getAttribute('id');
+        const name = this.getAttribute('value');
+
+        const cardValue = {name:name,id:value}
+        this.setAttribute('src',game.cardShown[value].src);
+        this.removeEventListener('click',flipCard);
+
         cardCompare.push(cardValue);
-        this.setAttribute('src', game.cardShown[value].src);
-        this.removeEventListener('click', flipCard);
-  
-        if(cardCompare[0].name === cardCompare[1].name) {
-          // Match found
-          setTimeout(function() {
-            console.log('you found a match!');
-            const id1 = cardCompare[0].id;
-            const id2 = cardCompare[1].id;
-            game.cardShown[id1].Enabled = false;
-            game.cardShown[id2].Enabled = false;
-            renderCards();
-            renderDisableOrEnableCard();
-            cardCompare = [];
-          }, 1000);
-        } else {
-          // No match found
-          setTimeout(function() {
-            renderCards();
-            renderDisableOrEnableCard();
-            cardCompare = [];
-            game.player.lifepoints -= 1;
-            renderDisplay();
-          }, 1000);
+
+        if(cardCompare[0].name === cardCompare[1].name){
+            setTimeout(function(){
+                console.log('you found a match!');
+                const id1 = cardCompare[0].id;
+                const id2 = cardCompare[1].id;
+        
+                game.cardShown[id1].Enabled = false;
+                game.cardShown[id2].Enabled = false;
+        
+                renderCards();
+                renderDisableOrEnableCard();
+                cardCompare = [];
+                
+                },1000)
         }
-        break;
-      default:
-        // More than two cards clicked, do nothing
-        break;
+        else{
+            setTimeout(function(){
+
+                renderCards();
+                renderDisableOrEnableCard();
+                cardCompare = [];
+                game.player.lifepoints -= 1;
+                renderDisplay();
+    
+            },1000)
+        }
     }
   }
+
+  
 
     
 function countdown(seconds) {
