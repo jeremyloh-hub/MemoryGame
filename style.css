@@ -11,6 +11,7 @@ img {
     border-radius: 90%;
     padding-left: 10%;
     padding-bottom: 5%;
+    user-select: none;
 }
 
 .cards{
@@ -20,6 +21,7 @@ img {
     padding-left: 20%;
     padding-right: 23%;
     padding-top: 10%;
+
 }
 
 body {
@@ -29,23 +31,28 @@ body {
 }
 
 .gameScreen{
+    
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     display: none;
 }
 
 .startScreen {
+    
     display: grid;
     justify-content: center;
     align-items: center;
     grid-column: 1;
     grid-row: 3;
-    display: block;
-    overflow: auto;
+    
     
 }
 
 .AllAbilityBtn{
     padding: 12px 28px;
     text-align: center;
+    
 }
 
 .AbilityBtn{
@@ -53,6 +60,19 @@ body {
     border-radius: 80%;
     font-size:  20px;
     text-align: center;
+}
+#startBtn{
+    padding: 15px 28px;
+    border-radius: 50%;
+    font-size:  20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#startBtn:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
 }
 
 .AbilityBtn:hover {
@@ -64,7 +84,13 @@ h1, h2, h3{
     text-align: center;
 }
 
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
 
 
 
 /* Reference to https://www.w3schools.com/csS/css3_flexbox_container.asp */
+/* https://stackoverflow.com/questions/639815/how-to-disable-all-div-content */

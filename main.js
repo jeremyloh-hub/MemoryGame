@@ -31,7 +31,7 @@ const game = {
 let cardCompare = [];
 
 function renderCards(){
-    const selectCardDiv = document.querySelector('.cards')
+    const selectCardDiv = document.querySelector('.cards');
     selectCardDiv.textContent = '';
 
     for (let i = 0; i < game.cardShown.length; i++) {
@@ -42,6 +42,7 @@ function renderCards(){
         createCards.setAttribute('value',cardArray.Name);
         createCards.setAttribute('src','Assets/cardcover.png');
         createCards.addEventListener('click',flipCard);
+
         selectCardDiv.appendChild(createCards);
     }
 }
@@ -110,7 +111,7 @@ function moveToGame(){
     {
         element.Enabled = true;
         startScreen.style.display = 'none';
-        gameScreen.style.display = 'block';
+        gameScreen.style.display = 'grid';
     }
     
    }
@@ -206,12 +207,41 @@ function countdown(seconds) {
      
    }
 
+   function startGame(){
+    countdown(game.timer);
+  
+    let startBtn = document.querySelector('#startBtn');
+    startBtn.classList.add('disabledbutton');
+
+    const cards = document.querySelectorAll('img');
+    for (let i = 0; i < cards.length; i++) {
+        let card = cards[i];
+        card.classList.remove('disabledbutton');
+    }
+   }
+
+   function disableAllCards()
+   {
+    const cards = document.querySelectorAll('img');
+    for (let i = 0; i < cards.length; i++) {
+        let card = cards[i];
+        card.classList.add('disabledbutton');
+        console.log(card);
+    }
+    
+   }
+
 
   function main(){
+    
+    const selectStartBtn = document.querySelector('#startBtn');
+    selectStartBtn.addEventListener('click',startGame);
+
+   
     RenderAbilityButton();
-    countdown(game.timer);
     renderDisplay();
     randomCards();
+    disableAllCards();
 
   }
   
