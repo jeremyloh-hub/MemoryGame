@@ -16,7 +16,7 @@ img {
 
 .cards{
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(6, auto);
     justify-content: center;
     padding-left: 20%;
     padding-right: 23%;
@@ -45,8 +45,32 @@ body {
     align-items: center;
     grid-column: 1;
     grid-row: 3;
-    
-    
+}
+
+.loseScreen{
+    display: none;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50%;
+    width: 50%;
+}
+
+.winScreen{
+    display: none;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50%;
+    width: 50%;
 }
 
 .AllAbilityBtn{
@@ -54,6 +78,16 @@ body {
     text-align: center;
     
 }
+
+.restartBtn{
+    padding: 15px 28px;
+    border-radius: 50%;
+    font-size:  20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .AbilityBtn{
     padding: 15px 28px;
@@ -80,6 +114,12 @@ body {
     color: white;
   }
 
+.restartBtn:hover{
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+
 h1, h2, h3{
     text-align: center;
 }
@@ -89,6 +129,34 @@ h1, h2, h3{
     opacity: 0.4;
 }
 
+.winScreen{
+    border-style: groove;
+    background-image: url('Assets/winscreen.webp');
+    border-color: whitesmoke;
+    
+}
+
+.loseScreen{
+    border-style: groove;
+    background-image: url('Assets/winscreen.webp');
+    border-color: whitesmoke;
+}
+
+.difficulty-ui {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+  }
+  
+  .difficulty-ui label {
+    margin: 0 10px;
+  }
+  
+  
+  
+
+ 
 
 
 

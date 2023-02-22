@@ -1,3 +1,18 @@
+const CARDS_COLLECTION =    [{Name: 'blackpom' , src: 'Assets/1.jpeg'},
+                            {Name: 'corgi' , src: 'Assets/2.jpeg'},
+                            {Name: 'golden' , src: 'Assets/3.webp'},
+                            {Name: 'husky' , src: 'Assets/4.webp'},
+                            {Name: 'pom' , src: 'Assets/5.jpeg'},
+                            {Name: 'shiba' , src: 'Assets/6.webp'},
+                            {Name: 'border' , src: 'Assets/7.jpeg'},
+                            {Name: 'frenchie' , src: 'Assets/8.webp'},
+                            {Name: 'poodle' , src: 'Assets/9.jpeg'},
+                            {Name: 'schnauzer' , src: 'Assets/10.jpeg'},
+                            {Name: 'spaniel' , src: 'Assets/11.webp'},
+                            {Name: 'yorkshire' , src: 'Assets/12.jpeg'},
+                            ]
+
+
 const game = { 
     player: {
         lifepoints: 10,
@@ -9,26 +24,26 @@ const game = {
                         {Name: 'AddTime', Enabled: false}]
     },
     timer:          '60',
-    cardShown: [{Name: 'blackpom' , src: 'Assets/1.jpeg' , Enabled: 'false'},
-                {Name: 'blackpom' , src: 'Assets/1.jpeg' , Enabled: 'false'},
-                {Name: 'corgi' , src: 'Assets/2.jpeg' , Enabled: 'false'},
-                {Name: 'corgi' , src: 'Assets/2.jpeg' , Enabled: 'false'},
-                {Name: 'golden' , src: 'Assets/3.webp', Enabled: 'false'},
-                {Name: 'golden' , src: 'Assets/3.webp' , Enabled: 'false'},
-                {Name: 'husky' , src: 'Assets/4.webp' , Enabled: 'false'},
-                {Name: 'husky' , src: 'Assets/4.webp' , Enabled: 'false'},
-                {Name: 'pom' , src: 'Assets/5.jpeg' , Enabled: 'false'},
-                {Name: 'pom' , src: 'Assets/5.jpeg' , Enabled: 'false'},
-                {Name: 'shiba' , src: 'Assets/6.webp' , Enabled: 'false'},
-                {Name: 'shiba' , src: 'Assets/6.webp' , Enabled: 'false'},
-            ] 
+    cardShown: [],
+    difficulty:  '6',
 }
+
+
 
 
 // Array for Comparison
 let cardCompare = [];
 ///////////////////////
 
+function addtoRenderCard(noOfCards){
+
+    for (let i = 0; i < noOfCards; i++) {
+        const element = CARDS_COLLECTION[i];
+        element.Enabled = false;
+        game.cardShown.push(element,element);
+        
+    }
+}
 
 function renderCards(){
     const selectCardDiv = document.querySelector('.cards');
@@ -77,10 +92,11 @@ function renderDisplay(){
 // https://stackoverflow.com/questions/12885110/javascript-math-random
 function randomCards()// set each card value to -1, 0 , 1 and then compare them 
 {
+    
     game.cardShown.sort(function(){
         return Math.round(Math.random() * 2) -1 
     })
-    renderCards(game.cardShown);
+    
 }
 
 
@@ -107,6 +123,7 @@ function moveToGame(){
    const gameScreen = document.querySelector('.gameScreen')
    const startScreen = document.querySelector('.startScreen');
    const ability = this.innerText;
+
    for (let i = 0; i < game.player.abilities.length; i++) {
     let element = game.player.abilities[i];
     if(element.Name === ability)
@@ -114,67 +131,113 @@ function moveToGame(){
         element.Enabled = true;
         startScreen.style.display = 'none';
         gameScreen.style.display = 'grid';
-    }
+    } 
+    
     
    }
+}
+
+function moveToLose()
+{
+    const gameScreen = document.querySelector('.gameScreen')
+    const startScreen = document.querySelector('.startScreen');
+    const loseScreen = document.querySelector('.loseScreen');
+
+    gameScreen.style.display = 'none';
+    loseScreen.style.display = 'grid';
     
 }
 
+function moveToWin(){
+    const gameScreen = document.querySelector('.gameScreen')
+    const startScreen = document.querySelector('.startScreen');
+    const winScreen = document.querySelector('.winScreen');
+
+    gameScreen.style.display = 'none';
+    winScreen.style.display = 'grid';
+}
+
 function flipCard() {
-    if(cardCompare.length === 0){
-        const value = this.getAttribute('id');
-        const name = this.getAttribute('value');
-
-        const cardValue = {name:name,id:value}
-        this.setAttribute('src',game.cardShown[value].src);
-        this.removeEventListener('click',flipCard);
-
-        cardCompare.push(cardValue);
-    }
-    else if(cardCompare.length === 1){
-        const value = this.getAttribute('id');
-        const name = this.getAttribute('value');
-
-        const cardValue = {name:name,id:value}
-        this.setAttribute('src',game.cardShown[value].src);
-        this.removeEventListener('click',flipCard);
-
-        cardCompare.push(cardValue);
+   
+if(cardCompare.length < 2) addCardtoArray(this);
+    
+    if(cardCompare.length === 2){//comparison array === 1
 
         if(cardCompare[0].name === cardCompare[1].name){
-            setTimeout(function(){
-                console.log('you found a match!');
-                const id1 = cardCompare[0].id;
-                const id2 = cardCompare[1].id;
-        
-                game.cardShown[id1].Enabled = false;
-                game.cardShown[id2].Enabled = false;
-        
-                renderCards();
-                renderDisableOrEnableCard();
-                cardCompare = [];
-                
-                },1000)
+            foundAMatch();
         }
         else{
-            setTimeout(function(){
-
-                renderCards();
-                renderDisableOrEnableCard();
-                cardCompare = [];
-                game.player.lifepoints -= 1;
-                renderDisplay();
-    
-            },1000)
+            matchWrongly();
         }
     }
   }
 
-  
+  function matchWrongly()
+{
+    setTimeout(function(){
 
-    
+        renderCards();
+        renderDisableOrEnableCard();
+        cardCompare = [];
+        game.player.lifepoints -= 1;
+        renderDisplay();
+
+        if(game.player.lifepoints === 0){
+            console.log('you lose!');//lose screen
+            moveToLose();
+
+        }
+
+    },1000)
+
+}
+
+function foundAMatch(){
+    setTimeout(function(){
+        console.log('you found a match!');
+        const id1 = cardCompare[0].id;
+        const id2 = cardCompare[1].id;
+
+        game.cardShown[id1].Enabled = false;
+        game.cardShown[id2].Enabled = false;
+
+        renderCards();
+        renderDisableOrEnableCard();
+        cardCompare = [];
+        game.player.points += 1;
+        renderDisplay();
+
+        if(checkAllCardsMatch()){ 
+            console.log('you win!');// win screen
+            moveToWin();
+        }
+
+        },1000)
+
+}
+
+  function addCardtoArray(card){
+
+    const selectedId = card.getAttribute('id');
+    const selectedName = card.getAttribute('value');
+
+    const cardValue = {name:selectedName,id:selectedId}
+    card.setAttribute('src',game.cardShown[selectedId].src);
+    card.removeEventListener('click',flipCard);
+
+    cardCompare.push(cardValue);
+} 
+
+  function checkAllCardsMatch(){
+    for (let i = 0; i < game.cardShown.length; i++) {
+        if (game.cardShown[i].Enabled) {
+          return false;
+        }
+      }
+      return true;
+}
+
 function countdown(seconds) {
-   
     let interval =  setInterval(function() {
          game.timer = seconds;
          renderDisplay();
@@ -182,7 +245,18 @@ function countdown(seconds) {
         
          if(seconds < 0)
          {
-             clearInterval(interval);
+            clearInterval(interval);
+            seconds = '60';
+            renderDisplay();
+             console.log('you lose!');// lose screen
+             moveToLose();
+         }
+         else if(checkAllCardsMatch())
+         {
+            clearInterval(interval);
+         }
+         else if(game.player.lifepoints === 0){
+            clearInterval(interval);
          }
      }, 1000);
      
@@ -196,7 +270,6 @@ function countdown(seconds) {
     enableAllCards();
     renderCards();
     renderDisableOrEnableCard();
-  
    }
 
    function disableAllCards()
@@ -230,22 +303,70 @@ function countdown(seconds) {
                     
                 }
             }
-            
    }
-   
+
+   function restart(){
+    const winScreen = document.querySelector('.winScreen');
+    const loseScreen = document.querySelector('.loseScreen');
+    const startScreen = document.querySelector('.startScreen')
+    const startBtn = document.querySelector('#startBtn');
+    player = game.player;
+    player.points = 0;
+    player.lifepoints = 10;
+    game.timer = '60';
+    game.cardShown = [];
+    
+    for (let i = 0; i < player.abilities.length; i++) {
+        const element = player.abilities[i];
+        element.Enabled = false;
+    }
+
+    startBtn.classList.remove('disabledbutton');
+    winScreen.style.display = 'none';
+    loseScreen.style.display = 'none';
+    startScreen.style.display = 'grid';
+
+    main();
+}
+
+function selectDifficulty(radiobutton){
+    for (let i = 0; i < radiobutton.length; i++) {
+        const element = radiobutton[i];
+        element.addEventListener('change',function(){
+        game.difficulty = element.value;
+        
+        game.cardShown = [];
+        addtoRenderCard(game.difficulty);
+        randomCards();
+        renderCards(game.cardShown);
+        
+        })
+        
+    }
+    
+}
+
 
   function main(){
     
     const selectStartBtn = document.querySelector('#startBtn');
     selectStartBtn.addEventListener('click',startGame);
 
-   
+    const selectRestartBtn = document.querySelectorAll('.restartBtn')
+    selectRestartBtn.forEach(function(button){
+        button.addEventListener('click',restart);
+    })
+
+    const selectRadioBtn = document.getElementsByName('difficulty');
+    selectDifficulty(selectRadioBtn);
+
     renderAbilityButton();
     renderDisplay();
+    addtoRenderCard(game.difficulty);
     randomCards();
+    renderCards(game.cardShown);
     disableAllCards();
     renderDisableOrEnableCard();
-
   }
   
 

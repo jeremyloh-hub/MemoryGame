@@ -12,6 +12,23 @@
 <body>
     <div class="startScreen">
         <h1>Memory Game</h1>
+
+        <div class="difficulty-ui">
+            <h4>Difficulty: </h4>
+            <label>
+              <input type="radio" name="difficulty" value="7" checked>
+              Easy
+            </label>
+            <label>
+              <input type="radio" name="difficulty" value="9">
+              Medium
+            </label>
+            <label>
+              <input type="radio" name="difficulty" value="12">
+              Hard
+            </label>
+          </div>
+
         <h2>Choose your Abilities:</h2>
         <div class="AllAbilityBtn">
 
@@ -27,20 +44,24 @@
                         <br><br>
                         Ability(AddTime): Add additional 30 seconds to the timer.
         </h3>
-        
     </div>
 
     <div class="gameScreen">
-        
-    <div class="display">
-        
-    </div>
+    <div class="display"></div>
     <div>
         <button id="startBtn">Start</button>
     </div>
-    <div class="cards">
-        
+    <div class="cards"></div>
     </div>
+
+    <div class="winScreen">
+        <h2>Congratulations, you won!</h2>
+        <button class="restartBtn">Restart</button>
+    </div>
+
+    <div class="loseScreen">
+        <h2>Game Over !</h2>
+        <button class="restartBtn">Restart</button>
     </div>
 </body>
 </html>

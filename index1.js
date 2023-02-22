@@ -56,3 +56,77 @@ function flipCard(){
     }
 
 }
+function winOrLose(){
+if(checkAllCardsMatch){
+
+}
+}
+
+function checkTimer(){
+time = game.timer;
+if(time === '0'){
+    console.log('you lose!');
+}
+}
+
+if(game.player.points === 0){
+    console.log('you lose!');
+}
+
+function addCardtoArray(card){
+
+    const selectedId = card.getAttribute('id');
+    const selectedName = card.getAttribute('value');
+
+    const cardValue = {name:selectedName,id:selectedId}
+    card.setAttribute('src',game.cardShown[selectedId].src);
+    card.removeEventListener('click',flipCard);
+
+    cardCompare.push(cardValue);
+} 
+
+function matchWrongly()
+{
+    setTimeout(function(){
+
+        renderCards();
+        renderDisableOrEnableCard();
+        cardCompare = [];
+        game.player.lifepoints -= 1;
+        renderDisplay();
+
+        if(game.player.points === 0){
+            console.log('you lose!');//lose screen
+        }
+
+    },1000)
+
+}
+
+function restart(){
+    player = game.player;
+    player.points = 0;
+    player.lifepoints = 10;
+    game.timer = '60';
+    game.cardShown = [];
+    
+    console.log(game.timer);
+    for (let i = 0; i < player.abilities.length; i++) {
+        const element = player.abilities[i];
+        element.Enabled = false;
+    }
+    
+    
+    main();
+}
+
+function selectDifficulty(radiobutton){
+    for (let i = 0; i < radiobutton.length; i++) {
+        const element = radiobutton[i];
+        element.addEventListener('change',function(){
+        game.difficulty = element.value;
+     
+        })
+    }
+    
+}
