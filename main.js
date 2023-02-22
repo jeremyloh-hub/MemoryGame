@@ -339,7 +339,9 @@ function selectDifficulty(radiobutton){
         addtoRenderCard(game.difficulty);
         randomCards();
         renderCards(game.cardShown);
-        
+        renderDisplay();
+        disableAllCards();
+        renderDisableOrEnableCard();
         })
         
     }
