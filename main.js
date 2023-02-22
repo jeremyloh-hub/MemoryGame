@@ -11,7 +11,7 @@ const CARDS_COLLECTION =    [{Name: 'blackpom' , src: 'Assets/1.jpeg'},
                             {Name: 'spaniel' , src: 'Assets/11.webp'},
                             {Name: 'yorkshire' , src: 'Assets/12.jpeg'},
                             ]
-
+const CARDCOVER = 'Assets/cardcover.png';
 
 const game = { 
     player: {
@@ -56,13 +56,34 @@ function renderCards(){
         createCards.setAttribute('id',i);
         createCards.setAttribute('value',cardArray.Name);
         createCards.setAttribute('data', cardArray.Enabled);
-        createCards.setAttribute('src','Assets/cardcover.png');
+        createCards.setAttribute('src',CARDCOVER);
         createCards.addEventListener('click',flipCard);
         selectCardDiv.appendChild(createCards);
         
-    // 
+     
     }
 }
+
+function renderCardsWithPic(){
+    const selectCardDiv = document.querySelector('.cards');
+    selectCardDiv.textContent = '';
+
+    for (let i = 0; i < game.cardShown.length; i++) {
+        const cardArray = game.cardShown[i];
+        const createCards = document.createElement('img');
+
+        createCards.setAttribute('id',i);
+        createCards.setAttribute('value',cardArray.Name);
+        createCards.setAttribute('data', cardArray.Enabled);
+        createCards.setAttribute('src',cardArray.src);
+        createCards.addEventListener('click',flipCard);
+        selectCardDiv.appendChild(createCards);
+        
+     
+    }
+}
+
+
 
 function renderDisplay(){
     const selectDisplayDiv = document.querySelector('.display');
@@ -118,6 +139,81 @@ for (let i = 0; i < game.player.abilities.length; i++) {
     selectBtnDiv.appendChild(createAbilityButton);
 }
 }
+
+function renderAbilityButtonInGame(){
+const selectGameBtnDiv = document.querySelector('.AllAbilityBtnGame');
+selectGameBtnDiv.textContent = '';
+
+for (let i = 0; i < game.player.abilities.length; i++) {
+    const ability = game.player.abilities[i];
+    
+    const createAbilityButton = document.createElement('button');
+    createAbilityButton.innerText = ability.Name;
+    createAbilityButton.setAttribute('value',ability.Enabled);
+    createAbilityButton.setAttribute('id',i);
+    createAbilityButton.classList.add('AbilityBtn');
+    createAbilityButton.classList.add('AbilityBtnGame');
+
+    if(ability.Name === 'RemoveOnePair'){
+        createAbilityButton.addEventListener('click',removeOnePair);
+    }
+    else if(ability.Name === 'RevealAll'){
+        createAbilityButton.addEventListener('click',revealAll);
+    }
+    else if(ability.Name === 'AddLifePoints'){
+        createAbilityButton.addEventListener('click',addLifePoints);
+    }
+    else if(ability.Name === 'AddTime'){
+        createAbilityButton.addEventListener('click',addTime);
+    }
+
+    selectGameBtnDiv.appendChild(createAbilityButton);
+}
+}
+
+function removeOnePair(){
+    for (let i = 0; i < game.cardShown.length; i++) {
+        const element = game.cardShown[i];
+        if(element.Name === 'pom'){
+            element.Enabled = false;
+        }
+}           
+            game.player.points += 1;
+            renderCards();
+            renderDisableOrEnableCard();
+            game.player.abilities[0].Enabled = 'false';
+            renderAbilityButtonInGame();
+            renderDisableorEnableBtn();
+}
+
+function revealAll(){
+
+    renderCardsWithPic();
+
+    setTimeout(function(){
+        renderCards();
+    },1000)
+    
+    game.player.abilities[1].Enabled = 'false';
+    renderAbilityButtonInGame();
+    renderDisableorEnableBtn();
+}
+
+function addLifePoints(){
+    game.player.lifepoints = game.player.lifepoints + 3;
+    game.player.abilities[2].Enabled = 'false';
+    renderAbilityButtonInGame();
+    renderDisableorEnableBtn();
+}
+
+function addTime(){
+    game.timer = game.timer + 30;
+    renderDisplay();
+    game.player.abilities[3].Enabled = 'false';
+    renderAbilityButtonInGame();
+    renderDisableorEnableBtn();
+}
+
 // https://stackoverflow.com/questions/21070101/show-hide-div-using-javascript
 function moveToGame(){
    const gameScreen = document.querySelector('.gameScreen')
@@ -132,8 +228,6 @@ function moveToGame(){
         startScreen.style.display = 'none';
         gameScreen.style.display = 'grid';
     } 
-    
-    
    }
 }
 
@@ -237,16 +331,16 @@ function foundAMatch(){
       return true;
 }
 
-function countdown(seconds) {
+function countdown() {
     let interval =  setInterval(function() {
-         game.timer = seconds;
+    
+         game.timer--;
          renderDisplay();
-         seconds--;
-        
-         if(seconds < 0)
+
+         if(game.timer < 0)
          {
             clearInterval(interval);
-            seconds = '60';
+            game.timer = '60';
             renderDisplay();
              console.log('you lose!');// lose screen
              moveToLose();
@@ -270,6 +364,8 @@ function countdown(seconds) {
     enableAllCards();
     renderCards();
     renderDisableOrEnableCard();
+    renderAbilityButtonInGame();
+    renderDisableorEnableBtn();
    }
 
    function disableAllCards()
@@ -305,6 +401,25 @@ function countdown(seconds) {
             }
    }
 
+   function renderDisableorEnableBtn(){
+    const selectAbilityBtn = document.querySelectorAll('.AbilityBtnGame');
+    for (let i = 0; i < selectAbilityBtn.length; i++) {
+        const element = selectAbilityBtn[i];
+        if(element.getAttribute('value') === 'false')
+                {
+                    element.classList.add('disabledbutton');
+                    
+                }
+                else if(element.getAttribute('data') === 'true')
+                {
+                    element.classList.remove('disabledbutton');
+                    
+                }
+    }
+}
+
+
+
    function restart(){
     const winScreen = document.querySelector('.winScreen');
     const loseScreen = document.querySelector('.loseScreen');
@@ -338,7 +453,7 @@ function selectDifficulty(radiobutton){
         game.cardShown = [];
         addtoRenderCard(game.difficulty);
         randomCards();
-        renderCards(game.cardShown);
+        renderCards();
         renderDisplay();
         disableAllCards();
         renderDisableOrEnableCard();
@@ -363,12 +478,14 @@ function selectDifficulty(radiobutton){
     selectDifficulty(selectRadioBtn);
 
     renderAbilityButton();
+    renderAbilityButtonInGame();
     renderDisplay();
     addtoRenderCard(game.difficulty);
     randomCards();
-    renderCards(game.cardShown);
+    renderCards(CARDCOVER);
     disableAllCards();
     renderDisableOrEnableCard();
+    renderDisableorEnableBtn();
   }
   
 
