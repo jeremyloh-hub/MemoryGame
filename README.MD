@@ -4,12 +4,12 @@
 
 MVP - Minimum Viable Product
 
-1.Built with Javascript , HTML & CSS
-2.Screenshots of the actual game
-3.Description of the game
-4.Include link of the deployed game
-5.Frequent commnit
-6.The code for the working game that is built by me
+1. Built with Javascript , HTML & CSS
+2. Screenshots of the actual game
+3. Description of the game
+4. Include link of the deployed game
+5. Frequent commnit
+6. The code for the working game that is built by me
 
 ## Link for the Game
 
@@ -24,10 +24,10 @@ https://jeremyloh-hub.github.io/MemoryGame/
 
 ## Technologies & Tools Used
 
-1.Javascript
-2.CSS
-3.HTML
-4.VSCode
+1. Javascript
+2. CSS
+3. HTML
+4. VSCode
 
 ## Description
 
@@ -43,17 +43,18 @@ The memory game is a card game played with a sets of card being facedown and eac
 
 ## Development
 
-1.Modal for the Game
-2.Render all the cards in the array
-3.Render Display (timer, points , lifepoints)
-4.Flip card
-5.Matching card Logic
-6.Winning & Losing condition
-7.Implement difficulty
-8.Add abilities
+1. Modal for the Game
+2. Render all the cards in the array
+3. Render Display (timer, points , lifepoints)
+4. Flip card
+5. Matching card Logic
+6. Winning & Losing condition
+7. Implement difficulty
+8. Add abilities
 
 ## Reference
 
 Picture Assets are from the link below
-https://pixabay.com
-https://www.pexels.com
+
+1. https://pixabay.com
+2. https://www.pexels.com
