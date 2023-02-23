@@ -58,21 +58,24 @@ The memory game is a card game played with a sets of card being facedown and eac
 ### Model
 
 ![Model](https://github.com/jeremyloh-hub/MemoryGame/blob/main/Notes/model.png?raw=true)
+
 The model stores all data i need for the game such as the game state , timer & abilities . It acts as a database of information that can be updated.
 
 ### View
 
 ![View](https://github.com/jeremyloh-hub/MemoryGame/blob/main/Notes/view.png?raw=true)
+
 The view present the latest data given by the model , however it does not contain any logic.
 
 ### Controller
 
-[Controller](https://github.com/jeremyloh-hub/MemoryGame/blob/main/Notes/controller.png?raw=true)
+![Controller](https://github.com/jeremyloh-hub/MemoryGame/blob/main/Notes/controller.png?raw=true)
+
 The controller is the one that has all logic and uses model to update its data and uses the view to present the data they want to show to the page.
 
 ### Favourite Function
 
-[Favourite](https://github.com/jeremyloh-hub/MemoryGame/blob/main/FavouriteFunction.png?raw=true)
+![Favourite](https://github.com/jeremyloh-hub/MemoryGame/blob/main/FavouriteFunction.png?raw=true)
 The reason why this is my favourite function is because it contains all the winning and losing conditions all in this function and it function as a timer as well. First it will check if the time reaches 0 if it does it will pass the result false to the model meaning that i have lost the game. Secondly it will check if all the cards has been correctly match if it does it will pass the result true which means i have won the game. Lastly it will check if the player lifepoints has gone down to 0 , if it does it will pass the result false to the model.
 
 ## Future Development
