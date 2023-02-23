@@ -110,14 +110,13 @@ function renderDisplay(){
 
 }
 
-// https://stackoverflow.com/questions/12885110/javascript-math-random
-function randomCards()// set each card value to -1, 0 , 1 and then compare them 
+// https://www.geeksforgeeks.org/shuffle-a-given-array-using-fisher-yates-shuffle-algorithm/
+function randomCards()
 {
-    
-    game.cardShown.sort(function(){
-        return Math.round(Math.random() * 2) -1 
-    })
-    
+    for (let i = game.cardShown.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [game.cardShown[i], game.cardShown[j]] = [game.cardShown[j], game.cardShown[i]];
+      }
 }
 
 
@@ -482,7 +481,7 @@ function selectDifficulty(radiobutton){
     renderDisplay();
     addtoRenderCard(game.difficulty);
     randomCards();
-    renderCards(CARDCOVER);
+    renderCards();
     disableAllCards();
     renderDisableOrEnableCard();
     renderDisableorEnableBtn();
