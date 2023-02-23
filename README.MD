@@ -75,7 +75,7 @@ The controller is the one that has all logic and uses model to update its data a
 
 ### Favourite Function
 
-![Favourite](https://github.com/jeremyloh-hub/MemoryGame/blob/main/FavouriteFunction.png?raw=true)
+![Favourite](https://github.com/jeremyloh-hub/MemoryGame/blob/main/favourite.png?raw=true)
 The reason why this is my favourite function is because it contains all the winning and losing conditions all in this function and it function as a timer as well. First it will check if the time reaches 0 if it does it will pass the result false to the model meaning that i have lost the game. Secondly it will check if all the cards has been correctly match if it does it will pass the result true which means i have won the game. Lastly it will check if the player lifepoints has gone down to 0 , if it does it will pass the result false to the model.
 
 ## Future Development
