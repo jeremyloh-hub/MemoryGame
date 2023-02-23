@@ -18,14 +18,15 @@ const game = {
         lifepoints: 10,
         points:     0,
         highscore:  0,
+        result: null,
         abilities:  [   {Name: 'RemoveOnePair', Enabled: false}, 
                         {Name: 'RevealAll', Enabled: false}, 
                         {Name: 'AddLifePoints', Enabled: false}, 
                         {Name: 'AddTime', Enabled: false}]
     },
     timer:          '60',
-    cardShown: [],
-    difficulty:  '6',
+    cardShown:      [],
+    difficulty:     '6',
 }
 
 
@@ -60,11 +61,10 @@ function renderCards(){
         createCards.addEventListener('click',flipCard);
         selectCardDiv.appendChild(createCards);
         
-     
     }
 }
 
-function renderCardsWithPic(){
+function renderCardsWithPic(){ //for RevealAll function
     const selectCardDiv = document.querySelector('.cards');
     selectCardDiv.textContent = '';
 
@@ -79,7 +79,6 @@ function renderCardsWithPic(){
         createCards.addEventListener('click',flipCard);
         selectCardDiv.appendChild(createCards);
         
-     
     }
 }
 
@@ -252,10 +251,9 @@ function moveToWin(){
 
 function flipCard() {
    
-if(cardCompare.length < 2) addCardtoArray(this);
+if(cardCompare.length < 2) addCardtoArray(this); // compare array is less than 2
     
-    if(cardCompare.length === 2){//comparison array === 1
-
+    if(cardCompare.length === 2){ // compare array is equal to 2
         if(cardCompare[0].name === cardCompare[1].name){
             foundAMatch();
         }
@@ -275,38 +273,43 @@ if(cardCompare.length < 2) addCardtoArray(this);
         game.player.lifepoints -= 1;
         renderDisplay();
 
-        if(game.player.lifepoints === 0){
-            console.log('you lose!');//lose screen
-            moveToLose();
-
-        }
-
     },1000)
 
 }
 
 function foundAMatch(){
     setTimeout(function(){
-        console.log('you found a match!');
         const id1 = cardCompare[0].id;
         const id2 = cardCompare[1].id;
 
-        game.cardShown[id1].Enabled = false;
+        game.cardShown[id1].Enabled = false; //disable the cards in the model
         game.cardShown[id2].Enabled = false;
 
-        renderCards();
-        renderDisableOrEnableCard();
-        cardCompare = [];
-        game.player.points += 1;
-        renderDisplay();
-
-        if(checkAllCardsMatch()){ 
-            console.log('you win!');// win screen
-            moveToWin();
-        }
+        renderCards(); // re-render the cards based on the model
+        renderDisableOrEnableCard(); // check on the model if the cards should be disabled or enabled
+        cardCompare = []; // clear the compare array
+        game.player.points += 1; // updating the model
+        renderDisplay(); //re-render the display
 
         },1000)
+}
 
+function checkWinOrLose(){
+    if(checkAllCardsMatch()){
+        game.player.result = true;
+    }
+    else if(game.player.lifepoints === 0){
+        game.player.result = false;
+    }
+}
+
+function moveToWinOrLose(){
+    if(game.player.result === true){
+        moveToWin();
+    }
+    else if(game.player.result === false){
+        moveToLose();
+    }
 }
 
   function addCardtoArray(card){
@@ -332,7 +335,6 @@ function foundAMatch(){
 
 function countdown() {
     let interval =  setInterval(function() {
-    
          game.timer--;
          renderDisplay();
 
@@ -341,18 +343,24 @@ function countdown() {
             clearInterval(interval);
             game.timer = '60';
             renderDisplay();
-             console.log('you lose!');// lose screen
-             moveToLose();
+            game.player.result = false;
+            checkWinOrLose();
+            moveToWinOrLose();
+             
          }
          else if(checkAllCardsMatch())
          {
+            checkWinOrLose();
+            moveToWinOrLose();
             clearInterval(interval);
          }
          else if(game.player.lifepoints === 0){
+            checkWinOrLose();
+            moveToWinOrLose();
             clearInterval(interval);
          }
+         
      }, 1000);
-     
    }
 
    function startGame(){
@@ -450,16 +458,10 @@ function selectDifficulty(radiobutton){
         game.difficulty = element.value;
         
         game.cardShown = [];
-        addtoRenderCard(game.difficulty);
-        randomCards();
-        renderCards();
-        renderDisplay();
-        disableAllCards();
-        renderDisableOrEnableCard();
+        main();
+
         })
-        
     }
-    
 }
 
 
